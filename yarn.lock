@@ -3669,6 +3669,11 @@ babel-jest@^26.6.3:
     graceful-fs "^4.2.4"
     slash "^3.0.0"
 
+babel-jsx-utils@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/babel-jsx-utils/-/babel-jsx-utils-1.0.1.tgz#f2d171cba526594e7d69e9893d634502cf950f07"
+  integrity sha512-Qph/atlQiSvfmkoIZ9VA+t8dA0ex2TwL37rkhLT9YLJdhaTMZ2HSM2QGzbqjLWanKA+I3wRQJjjhtuIEgesuLw==
+
 babel-loader@^8.1.0:
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.2.2.tgz#9363ce84c10c9a40e6c753748e1441b60c8a0b81"
@@ -8151,6 +8156,21 @@ gatsby-plugin-brotli@^2.0.0:
     glob "^7.1.6"
     mkdirp "^1.0.4"
     piscina "^1.6.3"
+
+gatsby-plugin-image@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-image/-/gatsby-plugin-image-0.6.1.tgz#3291f67036ed09788228d52bbdd4eb285f82aadf"
+  integrity sha512-NjsTegL0R1uoRcgdFWrI0/gYxm871c1hYoh6vzt2UYlrId2r6tdjtQjsLxF6SsDql+hIyAf+l2zfNuCpGYfzBw==
+  dependencies:
+    "@babel/parser" "^7.12.5"
+    "@babel/traverse" "^7.12.5"
+    babel-jsx-utils "^1.0.1"
+    babel-plugin-remove-graphql-queries "^2.15.0"
+    camelcase "^5.3.1"
+    chokidar "^3.4.3"
+    fs-extra "^8.1.0"
+    gatsby-core-utils "^1.9.0"
+    prop-types "^15.7.2"
 
 gatsby-plugin-manifest@^2.11.0:
   version "2.11.0"
