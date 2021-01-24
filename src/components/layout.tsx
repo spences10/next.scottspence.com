@@ -1,24 +1,35 @@
-import { Box, Container } from '@chakra-ui/react'
 import React, { FunctionComponent } from 'react'
+import { Box, Container } from 'theme-ui'
 import { useSiteMetadata } from '../hooks/site-metadata'
 import { Header } from './header'
 
 const Layout: FunctionComponent = ({ children }) => {
-  const { title, description } = useSiteMetadata()
+  const { title } = useSiteMetadata()
 
   return (
     <>
       <Header
         siteTitle={title || `Title`}
-        description={description}
+        description={`Scott's knowledge pamphlet`}
       />
-      <Container maxW="lg">
-        <Box as="div" margin="0 auto" padding="0 1.0875rem 1.45rem">
-          <Box as="main">{children}</Box>
-          <Box as="footer" marginTop="2rem" fontSize="xl">
-            © {new Date().getFullYear()} Scott Spence. All Rights
-            Reserved.
-          </Box>
+      <Container
+        sx={{
+          maxWidth: 640,
+          padding: ['20px', 0, 0],
+        }}
+      >
+        <Box
+          as="main"
+          sx={{
+            width: '100%',
+            flex: '1 1 auto',
+          }}
+        >
+          {children}
+        </Box>
+        <Box as="footer" variant="styles.p">
+          © {new Date().getFullYear()} Scott Spence. All Rights
+          Reserved.
         </Box>
       </Container>
     </>

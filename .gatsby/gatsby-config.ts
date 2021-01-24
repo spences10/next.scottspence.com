@@ -1,14 +1,19 @@
 const siteMetadata = {
   title: `Scott Spence`,
-  description: `A digital garden.`,
-  author: `@spences10`,
+  description: `A detailled account of what Scott Spence is about. 
+Currently learning TypeScript, Unit testing with React testing library with Jest and end to end testing with Cypress.`,
+  lastBuildDate: new Date(Date.now()).toISOString(),
+  siteUrl: `https://scottspence.com`,
+  authorName: `Scott Spence`,
+  twitterUsername: `@spences10`,
+  siteLanguage: `en-GB`,
+  siteLocale: `en_gb`,
 }
 
 export default {
   siteMetadata,
   plugins: [
     `gatsby-plugin-mdx-embed`,
-    `@chakra-ui/gatsby-plugin`,
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

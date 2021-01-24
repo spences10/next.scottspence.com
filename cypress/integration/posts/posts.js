@@ -5,13 +5,12 @@ import {
   When,
 } from 'cypress-cucumber-preprocessor/steps'
 
-Given('I am on the Garden page', () => {
-  cy.visit('/garden')
+Given('I am on the Posts page', () => {
+  cy.visit('/posts')
 })
 
 Then('I will see the content', () => {
   cy.contains('Scott Spence')
-  cy.contains('A digital garden')
 })
 
 When('I hover over the "Link boxes"', () => {

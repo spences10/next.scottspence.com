@@ -1,21 +1,18 @@
-import {
-  Box,
-  Container,
-  FormLabel,
-  Input,
-  Link,
-  ListItem,
-  UnorderedList,
-} from '@chakra-ui/react'
 import Fuse from 'fuse.js'
-import { graphql, Link as GatsbyLink } from 'gatsby'
+import { graphql } from 'gatsby'
 import React, {
   ChangeEvent,
   FunctionComponent,
+  useEffect,
   useRef,
   useState,
 } from 'react'
 import Highlighter from 'react-highlight-words'
+import SEO from 'react-seo-component'
+import { Box, Container, Input, Label } from 'theme-ui'
+import { InternalLink } from '../components/internal-link'
+import { useSiteMetadata } from '../hooks/site-metadata'
+import { ogImageUrl } from '../util/get-og-image'
 
 interface IndexPost {
   id: string
@@ -50,6 +47,15 @@ interface IndexPageProps {
 // IndexPage is of type FunctionComponent which accets a generic. <T>
 // A generica can be of any shape but in your case its the shape of the data object which you define in the page query below
 const GardenIndex: FunctionComponent<IndexPageProps> = ({ data }) => {
+  const {
+    title,
+    description,
+    siteUrl,
+    twitterUsername,
+    authorName,
+    siteLanguage,
+    siteLocale,
+  } = useSiteMetadata()
   const { nodes } = data.allMdx
   const [query, updateQuery] = useState('')
 
@@ -57,11 +63,11 @@ const GardenIndex: FunctionComponent<IndexPageProps> = ({ data }) => {
     includeScore: true,
     keys: ['frontmatter.title', 'excerpt', 'frontmatter.tags'],
     includeMatches: true,
-    threshold: 0.1,
+    threshold: 0.2,
   }
   const fuse = new Fuse(nodes, options)
   const results = fuse.search(query)
-  const searchRef = useRef(null)
+  const searchRef = useRef<HTMLInputElement>(null)
   const searchResults = query
     ? results.map(result => result.item)
     : nodes
@@ -70,12 +76,33 @@ const GardenIndex: FunctionComponent<IndexPageProps> = ({ data }) => {
     updateQuery(event.currentTarget?.value)
   }
 
+  useEffect(() => {
+    if (searchRef.current != null) searchRef.current.focus()
+  }, [])
+
   return (
     <>
-      <Box as="form" mt="5" mb="8">
-        <FormLabel htmlFor="search" fontSize="xl">
+      <SEO
+        title={`Index of posts!`}
+        titleTemplate={title}
+        description={description}
+        image={ogImageUrl(
+          authorName,
+          'scottspence.com',
+          `Scott's knowledge pamphlet!`
+        )}
+        pathname={siteUrl}
+        siteLanguage={siteLanguage}
+        siteLocale={siteLocale}
+        twitterUsername={twitterUsername}
+      />
+      <Box as="form">
+        <Label
+          htmlFor="search"
+          sx={{ fontSize: 'xl', fontFamily: 'body' }}
+        >
           Search:
-        </FormLabel>
+        </Label>
         <Input
           name="search"
           id="search"
@@ -86,9 +113,10 @@ const GardenIndex: FunctionComponent<IndexPageProps> = ({ data }) => {
             onSearch(event)
           }
           ref={searchRef}
+          sx={{ fontSize: 'xl', fontFamily: 'body' }}
         />
       </Box>
-      <UnorderedList m="0">
+      <Box as="ul" role="list" variant="styles.postsUl">
         {searchResults.map(post => {
           const {
             id,
@@ -97,32 +125,15 @@ const GardenIndex: FunctionComponent<IndexPageProps> = ({ data }) => {
             excerpt,
           } = post
           return (
-            <ListItem
+            <Box
+              as="li"
               key={id}
-              listStyleType="none"
-              border="1px"
-              borderColor="brand.500"
-              borderRadius="xl"
-              boxShadow="xl"
-              my="4"
+              role="listitem"
+              variant="styles.postsLi"
             >
-              <Link
-                as={GatsbyLink}
-                to={`/${slug}`}
-                textDecor="underline"
-                fontWeight="bold"
-                _hover={{
-                  color: 'brand.400',
-                  textDecor: 'none',
-                }}
-              >
-                <Container m="0" my="4">
-                  <Box
-                    as="h2"
-                    fontSize="3xl"
-                    my="4"
-                    fontFamily="heading"
-                  >
+              <InternalLink to={`/${slug}`}>
+                <Container m="0">
+                  <Box as="h2" variant="styles.h2">
                     <Highlighter
                       searchWords={[query]}
                       autoEscape={true}
@@ -133,8 +144,10 @@ const GardenIndex: FunctionComponent<IndexPageProps> = ({ data }) => {
                     </Highlighter>
                   </Box>
                   <Box
-                    // as="text"
-                    fontSize="xl"
+                    as="p"
+                    sx={{
+                      fontSize: 'xl',
+                    }}
                   >
                     <Highlighter
                       searchWords={[query]}
@@ -146,11 +159,11 @@ const GardenIndex: FunctionComponent<IndexPageProps> = ({ data }) => {
                     </Highlighter>
                   </Box>
                 </Container>
-              </Link>
-            </ListItem>
+              </InternalLink>
+            </Box>
           )
         })}
-      </UnorderedList>
+      </Box>
     </>
   )
 }

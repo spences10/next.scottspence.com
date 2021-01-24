@@ -1,7 +1,10 @@
-import { Text } from '@chakra-ui/react'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import React, { FunctionComponent } from 'react'
+import SEO from 'react-seo-component'
+import { Box } from 'theme-ui'
+import { useSiteMetadata } from '../hooks/site-metadata'
+import { ogImageUrl } from '../util/get-og-image'
 
 interface PostPageprops {
   data: {
@@ -19,12 +22,41 @@ interface PostPageprops {
 
 const PostPage: FunctionComponent<PostPageprops> = ({ data }) => {
   const {
+    title: siteTitle,
+    siteUrl,
+    authorName,
+    twitterUsername,
+    siteLanguage,
+    siteLocale,
+  } = useSiteMetadata()
+  const {
     body,
     frontmatter: { title },
+    tableOfContents,
+    timeToRead,
+    excerpt,
+    slug,
+    date,
   } = data.mdx
   return (
     <>
-      <Text fontSize="4xl">{title}</Text>
+      <SEO
+        title={title}
+        titleTemplate={siteTitle}
+        description={excerpt}
+        image={ogImageUrl(authorName, 'scottspence.com', title)}
+        pathname={`${siteUrl}${slug}`}
+        article={true}
+        siteLanguage={siteLanguage}
+        siteLocale={siteLocale}
+        twitterUsername={twitterUsername}
+        author={authorName}
+        datePublished={date}
+        dateModified={new Date(Date.now()).toISOString()}
+      />
+      <Box as="h1" variant="styles.h1">
+        {title}
+      </Box>
       <MDXRenderer>{body}</MDXRenderer>
     </>
   )
@@ -39,9 +71,12 @@ export const query = graphql`
       slug
       body
       frontmatter {
-        date
+        date(formatString: "YYYY MMMM Do")
         title
       }
+      tableOfContents
+      timeToRead
+      excerpt
     }
   }
 `
