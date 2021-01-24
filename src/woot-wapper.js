@@ -3,6 +3,7 @@ import { MDXProvider } from '@mdx-js/react'
 import { preToCodeBlock } from 'mdx-utils'
 import React from 'react'
 import { ThemeProvider } from 'theme-ui'
+import { MarkdownParser } from '../src/components/markdown-parser'
 import Layout from './components/layout'
 import { Code, H2 } from './components/mdx-elements'
 import theme from './theme'
@@ -36,6 +37,7 @@ const components = {
   // th: props => <Th {...props} />,
   // td: props => <Td {...props} />,
   // p: props => <P {...props} />,
+  MarkdownParser,
 }
 
 export const wrapPageElement = ({ element }) => {
