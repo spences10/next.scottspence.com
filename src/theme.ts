@@ -173,9 +173,7 @@ export default {
       boxShadow: 'lg',
       my: 4,
       padding: 2,
-      '::marker': {
-        content: `''`,
-      },
+      listStyle: 'none',
       a: {
         color: 'text',
         textDecoration: 'none',

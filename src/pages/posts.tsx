@@ -108,6 +108,7 @@ const GardenIndex: FunctionComponent<IndexPageProps> = ({ data }) => {
           id="search"
           type="text"
           placeholder="Search posts!"
+          autoComplete="false"
           value={query}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             onSearch(event)
